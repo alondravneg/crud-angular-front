@@ -4,112 +4,97 @@ import { Cliente } from '../models/cliente.module';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-
 @Component({
   selector: 'app-principal',
   imports: [FormsModule, NgIf],
   templateUrl: './principal.component.html',
-  styleUrl: './principal.component.css'
+  styleUrl: './principal.component.css',
 })
 export class PrincipalComponent {
-
   //Objeto do tipo cliente
   cliente = new Cliente();
 
-  //Variavel para visibilidade dos botoes
-  btnCadastro:boolean = true;
+  //Variavel para visibiledad dos botoes
+  btnRegistro: boolean = true;
 
-  //Variavel para visibilidade da table
-  tabela:boolean = true;
+  //Variavel para visibiledad da table
+  tabela: boolean = true;
 
   //JSON de clientes
-  clientes:Cliente[] = [];
+  clientes: Cliente[] = [];
 
   //Construtor
-  constructor(private servico:ClienteService){}
+  constructor(private servico: ClienteService) {}
 
   //Método de seleção
-  selecionar():void {
-    this.servico.selecionar()
-    .subscribe(retorno  => this.clientes = retorno);
+  selecionar(): void {
+    this.servico.selecionar().subscribe((retorno) => (this.clientes = retorno));
   }
 
-  cadastrar():void {
-    this.servico.cadatrar(this.cliente)
-    .subscribe(
-      retorno => {
-        this.clientes.push(retorno);
-        this.cliente = new Cliente();
-        alert('Cliente cadastrado com sucesso!');
-      }
-    );
+  registrar(): void {
+    this.servico.registrar(this.cliente).subscribe((retorno) => {
+      this.clientes.push(retorno);
+      this.cliente = new Cliente();
+      alert('Cliente cadastrado com sucesso!');
+    });
   }
 
   // Método para selecionar um cliente específico
-  selecionarCliente(codigo:number):void{
-    const clienteEncontrado = this.clientes.find(c => c.codigo === codigo);
+  selecionarCliente(codigo: number): void {
+    const clienteEncontrado = this.clientes.find((c) => c.codigo === codigo);
     if (clienteEncontrado) {
       this.cliente = clienteEncontrado;
     }
 
-    this.btnCadastro = false;
+    this.btnRegistro = false;
     this.tabela = false;
   }
 
   //Método para editar clientes
-  editar():void{
-    this.servico.editar(this.cliente)
-    .subscribe(
-      retorno => {
-        let posicao = this.clientes.findIndex(c => {
-          return c.codigo == retorno.codigo;
-        });
-        this.clientes[posicao] = retorno;
+  editar(): void {
+    this.servico.editar(this.cliente).subscribe((retorno) => {
+      let posicao = this.clientes.findIndex((c) => {
+        return c.codigo == retorno.codigo;
+      });
+      this.clientes[posicao] = retorno;
 
-        this.cliente = new Cliente();
+      this.cliente = new Cliente();
 
-        //Visibiliade dos botoes
-        this.btnCadastro = true;
+      //Visibiliade dos botoes
+      this.btnRegistro = true;
 
-        //Visibilidade da tabela
-        this.tabela = true;
-        alert('Cliente alterado com sucesso!');
-
-      }
-    );
+      //Visibiledad da tabela
+      this.tabela = true;
+      alert('Cliente alterado com sucesso!');
+    });
   }
 
-  remover():void{
-    this.servico.remover(this.cliente.codigo)
-    .subscribe(
-      retorno => {
-        let posicao = this.clientes.findIndex(c => {
-          return c.codigo == this.cliente.codigo;
-        });
-        this.clientes.splice(posicao, 1);
+  remover(): void {
+    this.servico.remover(this.cliente.codigo).subscribe((retorno) => {
+      let posicao = this.clientes.findIndex((c) => {
+        return c.codigo == this.cliente.codigo;
+      });
+      this.clientes.splice(posicao, 1);
 
-        this.cliente = new Cliente();
+      this.cliente = new Cliente();
 
-        //Visibiliade dos botoes
-        this.btnCadastro = true;
+      //Visibiliade dos botoes
+      this.btnRegistro = true;
 
-        //Visibilidade da tabela
-        this.tabela = true;
-        alert('Cliente removido com sucesso!');
-      }
-    );
+      //Visibiledad da tabela
+      this.tabela = true;
+      alert('Cliente removido com sucesso!');
+    });
   }
 
-  cancelar():void {
-    this.btnCadastro = true;
+  cancelar(): void {
+    this.btnRegistro = true;
     this.tabela = true;
     this.cliente = new Cliente();
   }
-
 
   //Método de inicialização
   ngOnInit() {
     this.selecionar();
   }
-
 }

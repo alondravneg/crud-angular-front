@@ -21,7 +21,7 @@ export class ClienteService {
     return this.http.get<Cliente[]>(this.url);
   }
 
-  cadatrar(obj:Cliente):Observable<Cliente>{
+  registrar(obj:Cliente):Observable<Cliente>{
     return this.http.post<Cliente>(this.url, obj);
   }
 
