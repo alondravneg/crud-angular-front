@@ -11,18 +11,15 @@ form {
 
 input {
   margin-bottom: 10px;
+  &:hover {
+    --bs-btn-hover-border-color: #b56467 !important;
+  }
 }
 
 input[type="button"] {
   margin-right: 10px;
 }
 
-.btn-primary {
-  background-color: #e5989b !important;
-  --bs-btn-border-color: #e5989b;
-  color: white;
-  &:hover {
-    background-color: #b56467 !important;
-    --bs-btn-hover-border-color: #b56467 !important;
-  }
-}
+
+
+

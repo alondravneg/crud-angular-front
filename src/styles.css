@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+.form-control:focus {
+    border-color: #b56467;
+    box-shadow: 0 0 0 0.25rem #f2b8ba;
+}
+
+.btn-primary {
+    background-color: #e5989b !important;
+    --bs-btn-border-color: #e5989b;
+    color: white;
+    &:hover {
+      background-color: #b56467 !important;
+      --bs-btn-hover-border-color: #b56467 !important;
+    }
+  }
